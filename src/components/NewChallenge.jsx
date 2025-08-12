@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, stagger } from "framer-motion";
 import { ChallengesContext } from "../store/challenges-context.jsx";
 import Modal from "./Modal.jsx";
 import images from "../assets/images.js";
@@ -65,7 +65,19 @@ export default function NewChallenge({ onDone }) {
                     />
                 </p>
 
-                <ul id="new-challenge-images">
+                <motion.ul
+                    id="new-challenge-images"
+                    variants={{
+                        visible: {
+                            transition: {
+                                delayChildren: stagger(0.1, {
+                                    // startDelay: 0.5,
+                                    from: "first",
+                                }),
+                            },
+                        },
+                    }}
+                >
                     {images.map((image) => (
                         <motion.li
                             variants={{
@@ -83,7 +95,7 @@ export default function NewChallenge({ onDone }) {
                             <img {...image} />
                         </motion.li>
                     ))}
-                </ul>
+                </motion.ul>
 
                 <p className="new-challenge-actions">
                     <button type="button" onClick={onDone}>
